@@ -20,9 +20,6 @@ export default {
     return {
       canvas: null,
       json: '',
-      decompressedJson: '',
-      waitingForDecompress: false,
-      worker: null,
     };
   },
   mounted() {
@@ -36,29 +33,14 @@ export default {
     brush.decimate = 10;
     this.canvas.freeDrawingBrush = brush;
     this.canvas.on('path:created', this.getJson);
-
-    this.worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
-    this.worker.addEventListener(
-      'message',
-      (e) => {
-        if (e.data.type === 'compressed') {
-          this.json = e.data.value;
-        } else if (e.data.type === 'decompressed') {
-          this.decompressedJson = e.data.value;
-          this.waitingForDecompress = false;
-        }
-      }
-    );
-    this.worker.postMessage({ type: 'test' })
   },
   methods: {
     async getJson() {
-      this.worker.postMessage({ type: 'compress', value: JSON.stringify(this.canvas.toJSON()) })
-      // let json = this.canvas.toJSON();
+      let json = this.canvas.toJSON();
+      this.json = JSON.stringify(json);
     },
     async loadJson() {
-      // this.canvas.loadFromJSON(await decompress(this.json));
-      this.worker.postMessage({ type: 'decompress', value: this.json })
+      this.canvas.loadFromJSON(this.json);
     },
     download() {
       var element = document.createElement('a');
