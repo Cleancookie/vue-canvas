@@ -43,18 +43,15 @@ export default {
       this.canvas.loadFromJSON(this.json);
     },
     async download() {
-      var element = document.createElement('a');
+      let element = document.createElement('a');
       element.setAttribute(
         'href',
         'data:text/plain;charset=utf-8,' + encodeURIComponent(await compress(this.json))
       );
       element.setAttribute('download', 'canvasState.txt');
-
       element.style.display = 'none';
       document.body.appendChild(element);
-
       element.click();
-
       document.body.removeChild(element);
     },
   },
