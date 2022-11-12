@@ -1,13 +1,19 @@
 <template>
   <div id="app">
     <canvas id="c"></canvas>
-    <button @click="getJson">To Json</button>
-    <button @click="loadJson">Load Json</button>
-    <button @click="loadFromPaths">Load from paths</button>
-    <button @click="download">Download</button>
-    <br />
-    <textarea name="" id="" cols="30" rows="10" v-model="json"></textarea>
-    <p>Json size: {{ json.length }}. Number of paths (different from json): {{ paths.length }}</p>
+    <hr />
+    <div>
+      <textarea name="" id="" cols="30" rows="4" v-model="json"></textarea>
+      <p>Json size: {{ json.length }}</p>
+      <button @click="loadJson">Load Json</button>
+      <button @click="download">Download</button>
+    </div>
+    <hr />
+    <div>
+      <textarea name="" id="" cols="30" rows="4" v-model="paths"></textarea>
+      <p>Number of paths: {{ paths.length }}</p>
+      <button @click="loadFromPaths">Load from paths</button>
+    </div>
   </div>
 </template>
 
