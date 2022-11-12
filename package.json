@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "brotli-unicode": "^1.0.2",
+    "fabric": "^5.2.4",
     "vue": "^3.2.25"
   },
   "devDependencies": {
