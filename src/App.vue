@@ -12,7 +12,7 @@
 
 <script>
 import { fabric } from 'fabric';
-
+import { compress, decompress } from 'brotli-unicode';
 
 export default {
   name: 'App',
@@ -42,11 +42,11 @@ export default {
     async loadJson() {
       this.canvas.loadFromJSON(this.json);
     },
-    download() {
+    async download() {
       var element = document.createElement('a');
       element.setAttribute(
         'href',
-        'data:text/plain;charset=utf-8,' + encodeURIComponent(this.json)
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(await compress(this.json))
       );
       element.setAttribute('download', 'canvasState.txt');
 
