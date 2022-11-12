@@ -10,9 +10,8 @@
     </div>
     <hr />
     <div>
-      <textarea name="" id="" cols="30" rows="4" v-model="paths"></textarea>
+      <textarea name="" id="" cols="30" rows="4" v-model="paths" disabled></textarea>
       <p>Number of paths: {{ paths.length }}</p>
-      <button @click="loadFromPaths">Load from paths</button>
     </div>
   </div>
 </template>
@@ -56,7 +55,6 @@ export default {
     },
     async loadFromPaths() {
       this.loadingFromPaths = true;
-
       this.canvas.clear();
       let json = JSON.parse(this.json);
       json.objects = [];
@@ -65,7 +63,6 @@ export default {
       })
       this.json = JSON.stringify(json);
       await this.loadJson();
-
       this.loadingFromPaths = false;
     },
     async getJson() {
@@ -74,6 +71,12 @@ export default {
     },
     async loadJson() {
       this.canvas.loadFromJSON(this.json);
+      const json = JSON.parse(this.json);
+      this.paths = [];
+      json.objects.forEach((obj) => {
+        console.log(obj)
+        this.paths.push(JSON.stringify(obj))
+      })
     },
     async download() {
       let element = document.createElement('a');
